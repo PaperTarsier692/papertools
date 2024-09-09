@@ -4,6 +4,8 @@ from typing import Callable, Any, Union
 
 
 class WebServify:
+    '''Simple class for providing a HTTP server'''
+
     def __init__(self) -> None:
         global get, post, file
         get = self._Get()
@@ -14,6 +16,7 @@ class WebServify:
         self.file = file
 
     def start(self, port: int = 8080, ip: str = '127.0.0.1') -> None:
+        '''Starts the Server'''
         http.server.HTTPServer((ip, port), self._Handler).serve_forever()
 
     class _Get:
@@ -21,6 +24,7 @@ class WebServify:
             self.gets: dict[str, Callable] = {}
 
         def serve(self, path: str) -> Any:
+            '''Decorator for turning a function into an GET API endpoint'''
             def decorator(func: Callable) -> Callable:
                 self.gets[path] = func
                 return func
@@ -31,6 +35,7 @@ class WebServify:
             self.posts: dict[str, Callable] = {}
 
         def serve(self, path: str) -> Any:
+            '''Decorator for turning a function into an POST API endpoint'''
             def decorator(func: Callable) -> Callable:
                 self.posts[path] = func
                 return func
@@ -40,8 +45,9 @@ class WebServify:
         def __init__(self) -> None:
             self.files: dict[str, Union[str, File]] = {}
 
-        def file(self, filepath: str, webpath: str = 'None', load_into_ram: bool = True) -> None:
-            if webpath == 'None':
+        def file(self, filepath: str, webpath: Union[str, None] = None, load_into_ram: bool = True) -> None:
+            '''Hosts the given file at the given webpath (default is filename). load_into_ram specifies wether the file should be reloaded everytime a requests gets made, or be loaded once into the RAM.'''
+            if webpath == None:
                 webpath = filepath
             if load_into_ram:
                 self.files[webpath] = File(filepath).read()
@@ -49,6 +55,8 @@ class WebServify:
                 self.files[webpath] = File(filepath)
 
     class _Handler(http.server.BaseHTTPRequestHandler):
+        '''The handler for requests'''
+
         def do_GET(self) -> None:
             if self.path.split('?')[0] not in get.gets:
                 self.send_response(404)

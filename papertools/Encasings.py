@@ -1,4 +1,5 @@
 class Encasings:
+    '''Functions for handling [Encased] strings'''
     @staticmethod
     def encase(inp: str, case1: str, case2: str = '') -> str:
         if case2 == '':

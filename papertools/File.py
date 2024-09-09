@@ -3,13 +3,17 @@ import json
 
 
 class File:
+    '''Shorter functions for interacting with files'''
+
     def __init__(self, path: str) -> None:
         self.path: str = os.path.abspath(path)
 
     def exists(self) -> bool:
+        '''Returns wether the file exists or not'''
         return os.path.exists(self.path)
 
     def read(self, error_ok: bool = False) -> str:
+        '''Returns the content of a file as a string'''
         if not self.exists:
             if error_ok:
                 return ''
@@ -18,9 +22,11 @@ class File:
             return f.read()
 
     def readlines(self) -> list[str]:
+        '''Returns the content of a file as a list of its lines'''
         return self.read().splitlines()
 
     def write(self, content: str, create_path: bool = False) -> None:
+        '''Writes the specified content to a file'''
         if create_path:
             self.create_path(self.path)
 
@@ -28,6 +34,7 @@ class File:
             f.write(content)
 
     def writelines(self, content: list[str], create_path: bool = False) -> None:
+        '''Write the given lines to a file'''
         if create_path:
             self.create_path(self.path)
 
@@ -35,9 +42,11 @@ class File:
             f.write('\n'.join(content))
 
     def json_r(self) -> dict:
+        '''Returns a dict representation of a JSON serializable file'''
         return json.loads(self.read())
 
     def json_w(self, content: dict, indent: int = 2, create_path: bool = False, check_json: bool = True) -> None:
+        '''Writes a dict to a JSON file'''
         if create_path:
             self.create_path(self.path)
 
@@ -51,6 +60,7 @@ class File:
             json.dump(content, f, indent=indent)
 
     def append(self, content: str, create_path: bool = False) -> None:
+        '''Appends the given content (with newline) to a file'''
         if create_path and not self.exists():
             self.create_path(self.path)
             inp: list[str] = [content]
@@ -64,6 +74,7 @@ class File:
 
     @staticmethod
     def create_path(path: str, mode: int = 777, exists_ok: bool = True):
+        '''Creates a path with every directory'''
         if not exists_ok and os.path.exists(path):
             raise FileExistsError(f"File: {path} already exists")
         if not os.path.exists(os.path.dirname(path)):

@@ -3,11 +3,14 @@ from .Encasings import Encasings
 
 
 class Cfg:
+    '''Class for handling .cfg files'''
+
     def __init__(self) -> None:
         pass
 
     @staticmethod
     def path_to_dict(path: str, error_ok: bool = False) -> dict[str, dict[str, str]]:
+        '''Returns a dict representation of a .cfg file'''
         if not path.endswith('.cfg') and not error_ok:
             raise SyntaxError("File not ending in .cfg")
         output: dict[str, dict[str, str]] = {}
@@ -26,6 +29,7 @@ class Cfg:
 
     @staticmethod
     def list_to_dict(content: list[str], error_ok: bool = False) -> dict[str, dict[str, str]]:
+        '''Returns a dict representation of a list of strings representing a .cfg file'''
         output: dict[str, dict[str, str]] = {}
         current_category: str = ''
         for line in content:
