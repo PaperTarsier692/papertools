@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='paperlib',
+    name='papertools',
     version='0.8',
     packages=find_packages(),
 )
