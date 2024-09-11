@@ -10,7 +10,7 @@ class Webhook:
         self.name: Union[str, None] = name
         self.image: Union[str, None] = image
 
-    def send(self, name: Union[str, None] = None, image: Union[str, None] = None) -> None:
+    def send(self, name: Union[str, None] = None, image: Union[str, None] = None) -> requests.Response:
         '''Sends a message to the webhook'''
         if name == None:
             name = self.name
@@ -21,4 +21,4 @@ class Webhook:
             'username': name,
             'avatar_url': image
         }
-        requests.post(self.url, json=data)
+        return requests.post(self.url, json=data)
