@@ -16,6 +16,6 @@ class Console:
             system('clear')
 
     @staticmethod
-    def print_colour(inp: str, colour: Literal['red', 'yellow', 'blue', 'green']) -> None:
+    def print_colour(inp: str, colour: Literal['red', 'yellow', 'blue', 'green'], **kwargs) -> None:
         '''Prints the given string in the specified colour'''
-        print(f'{colours.get(colour, "")}{inp}{colours["end"]}')
+        print(f'{colours.get(colour, "")}{inp}{colours["end"]}', **kwargs)
