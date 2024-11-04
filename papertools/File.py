@@ -21,6 +21,15 @@ class File:
         with open(self.path, 'r', encoding='utf-8') as f:
             return f.read()
 
+    def read_b(self, error_ok: bool = False) -> bytes:
+        '''Returns the bytes of a file'''
+        if not self.exists:
+            if error_ok:
+                return b''
+            raise FileNotFoundError(f"File: {self.path} not found")
+        with open(self.path, 'rb') as f:
+            return f.read()
+
     def readlines(self) -> list[str]:
         '''Returns the content of a file as a list of its lines'''
         return self.read().splitlines()
