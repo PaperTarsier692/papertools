@@ -4,14 +4,14 @@ import os
 class Dir:
     '''Easier functions for directories'''
     @staticmethod
-    def listfiles(path: str, include_hidden: bool = True) -> list[str]:
+    def listfiles(path: str, include_hidden: bool = True, abspath: bool = False) -> list[str]:
         '''Returns a list of all files in the given directory'''
-        return [file for file in os.listdir(path) if os.path.isfile(os.path.join(path, file)) if not file.startswith('.') or include_hidden]
+        return [os.path.join(path, file) if abspath else file for file in os.listdir(path) if os.path.isfile(os.path.join(path, file)) if not file.startswith('.') or include_hidden]
 
     @staticmethod
-    def listdirs(path: str, include_hidden: bool = True) -> list[str]:
+    def listdirs(path: str, include_hidden: bool = True, abspath: bool = False) -> list[str]:
         '''Returns a list of all subdirs in the given directory'''
-        return [dir for dir in os.listdir(path) if os.path.isdir(os.path.join(path, dir)) if not dir.startswith('.') or include_hidden]
+        return [os.path.join(path, dir) if abspath else dir for dir in os.listdir(path) if os.path.isdir(os.path.join(path, dir)) if not dir.startswith('.') or include_hidden]
 
     @staticmethod
     def walk(path: str):
