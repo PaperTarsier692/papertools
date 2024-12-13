@@ -42,6 +42,14 @@ class File:
         with open(self.path, 'w', encoding='utf-8') as f:
             f.write(content)
 
+    def write_b(self, content: bytes, create_path: bool = False) -> None:
+        '''Writes the specified bytes to a file'''
+        if create_path:
+            self.create_path(self.path)
+
+        with open(self.path, 'wb') as f:
+            f.write(content)
+
     def writelines(self, content: list[str], create_path: bool = False) -> None:
         '''Write the given lines to a file'''
         if create_path:
