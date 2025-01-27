@@ -14,7 +14,7 @@ class File:
 
     def read(self, error_ok: bool = False) -> str:
         '''Returns the content of a file as a string'''
-        if not self.exists:
+        if not self.exists():
             if error_ok:
                 return ''
             raise FileNotFoundError(f"File: {self.path} not found")
@@ -23,7 +23,7 @@ class File:
 
     def read_b(self, error_ok: bool = False) -> bytes:
         '''Returns the bytes of a file'''
-        if not self.exists:
+        if not self.exists():
             if error_ok:
                 return b''
             raise FileNotFoundError(f"File: {self.path} not found")
