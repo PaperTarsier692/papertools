@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='papertools',
-    version='1.15',
+    version='1.16',
     packages=find_packages(),
     author='PaperTarsier692',
     url='https://www.github.com/PaperTarsier692/papertools',
