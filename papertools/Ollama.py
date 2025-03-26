@@ -35,3 +35,15 @@ class Ollama:
                                       ).json()['message']['content']
         self.messages.append({'role': 'assistant', 'content': response})
         return response
+
+    async def send_async(self, inp: str) -> str:
+        '''Sends the input with history from every previous call of send'''
+        self.messages.append({'role': 'user', 'content': inp})
+        response: str = requests.post(self.chat,
+                                      json={'messages': self.messages,
+                                            'model': self.model,
+                                            'temperature': self.temperature,
+                                            'stream': False}
+                                      ).json()['message']['content']
+        self.messages.append({'role': 'assistant', 'content': response})
+        return response

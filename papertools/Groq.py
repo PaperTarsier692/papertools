@@ -25,3 +25,11 @@ class Groq:
             messages=self.messages, model=self.model, temperature=self.temperature).model_dump()['choices'][0]['message']['content']
         self.messages.append({'role': 'assistant', 'content': response})
         return response
+
+    async def send_async(self, inp: str) -> str:
+        '''Sends the input with history from every previous call of send'''
+        self.messages.append({'role': 'user', 'content': inp})
+        response: str = self.client.chat.completions.create(
+            messages=self.messages, model=self.model, temperature=self.temperature).model_dump()['choices'][0]['message']['content']
+        self.messages.append({'role': 'assistant', 'content': response})
+        return response
