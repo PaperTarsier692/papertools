@@ -58,6 +58,14 @@ class File:
         with open(self.path, 'w', encoding='utf-8') as f:
             f.write('\n'.join(content))
 
+    def without_comments(self, comment_char: str = '//') -> str:
+        '''Returns the content of a file as a string without comments (inline or whole line)'''
+        return '\n'.join([line.split(comment_char)[0].rstrip() for line in self.read().splitlines() if line.strip() and not line.strip().startswith(comment_char)])
+
+    def jsonc_r(self) -> dict:
+        '''Returns a dict representation of a JSONC file'''
+        return json.loads(self.without_comments())
+
     def json_r(self) -> dict:
         '''Returns a dict representation of a JSON serializable file'''
         return json.loads(self.read())
