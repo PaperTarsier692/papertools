@@ -1,6 +1,6 @@
 import http.server
 from .File import File
-from typing import Callable, Any, Union
+from typing import Callable, Any, Optional, Union
 
 
 class WebServify:
@@ -45,9 +45,9 @@ class WebServify:
         def __init__(self) -> None:
             self.files: dict[str, Union[str, File]] = {}
 
-        def file(self, filepath: str, webpath: Union[str, None] = None, load_into_ram: bool = True) -> None:
+        def file(self, filepath: str, webpath: Optional[str] = None, load_into_ram: bool = True) -> None:
             '''Hosts the given file at the given webpath (default is filename). load_into_ram specifies wether the file should be reloaded everytime a requests gets made, or be loaded once into the RAM.'''
-            if webpath == None:
+            if webpath is None:
                 webpath = filepath
             if load_into_ram:
                 self.files[webpath] = File(filepath).read()
@@ -71,7 +71,7 @@ class WebServify:
             if '?' in self.path:
                 for arg in self.path.split('?')[1].split('&'):
                     args[arg.split('=')[0]] = arg.split('=')[1]
-            out: function = get.gets[self.path.split('?')[0]]
+            out: Callable = get.gets[self.path.split('?')[0]]
             result: Any = out(**args)
             self.wfile.write(result.encode())
 
@@ -89,6 +89,6 @@ class WebServify:
             if '?' in self.path:
                 for arg in self.path.split('?')[1].split('&'):
                     args[arg.split('=')[0]] = arg.split('=')[1]
-            out: function = post.posts[self.path.split('?')[0]]
+            out: Callable = post.posts[self.path.split('?')[0]]
             result: Any = out(**args)
             self.wfile.write(result.encode())

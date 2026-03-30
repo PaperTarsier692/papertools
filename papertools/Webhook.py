@@ -14,9 +14,9 @@ class Webhook:
 
     def send(self, msg: str, name: Union[str, None] = None, image: Union[str, None] = None) -> requests.Response:
         '''Sends a message to the webhook'''
-        if name == None:
+        if name is None:
             name = self.name
-        if image == None:
+        if image is None:
             image = self.image
 
         data: dict = {
@@ -28,9 +28,9 @@ class Webhook:
 
     def send_file(self, path: str, name: Union[str, None] = None, image: Union[str, None] = None) -> int:
         '''Sends a file to the webhook'''
-        if name == None:
+        if name is None:
             name = self.name
-        if image == None:
+        if image is None:
             image = self.image
 
         data = {

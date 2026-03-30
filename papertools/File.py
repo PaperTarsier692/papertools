@@ -98,7 +98,7 @@ class File:
         return self.read()
 
     @staticmethod
-    def create_path(path: str, mode: int = 777, exists_ok: bool = True):
+    def create_path(path: str, mode: int = 0o777, exists_ok: bool = True):
         '''Creates a path with every directory'''
         if not exists_ok and os.path.exists(path):
             raise FileExistsError(f"File: {path} already exists")
